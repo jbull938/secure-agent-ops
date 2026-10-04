@@ -70,7 +70,7 @@ Each agent has its own memory, plus a shared memory about me that every agent ca
 
 Repeatable procedures live as skills in the open Agent Skills (`SKILL.md`) format in [`skills/`](../skills/). Each skill has a short description that says what it does and when to use it, so an agent can find it and load it only when needed. Longer reference material sits in linked files.
 
-Skills are generic and shared. The career agent and the executive assistant both use the same draft-before-send skill, instead of each having its own version. Skills are versioned in git, and each one documents its known failure modes and ships with evaluation cases.
+Skills are generic and shared. The career agent and the executive assistant both use the same [draft-before-send](../skills/draft-before-send/SKILL.md) skill, instead of each having its own version. Skills are versioned in git, and each one documents its known failure modes and ships with evaluation cases.
 
 ## 6. Routines
 

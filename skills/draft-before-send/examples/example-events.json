@@ -1,0 +1,293 @@
+[
+  {
+    "time": 1791142320,
+    "host": "agent-runtime-01",
+    "source": "secure-agent-ops:draft-before-send",
+    "sourcetype": "secure_agent_ops:draft_before_send",
+    "index": "<your_agent_audit_index>",
+    "event": {
+      "user": "agent-exec-assistant",
+      "user_type": "ai_agent",
+      "token_id": "tok-ea-07",
+      "owner": "jordan.rivera",
+      "src_user": "jordan.rivera@example.com",
+      "channel": "email",
+      "thread_id": "thr-88412",
+      "trigger": "owner_request",
+      "time": "2026-10-04T19:32:00Z",
+      "event_type": "send_draft_created",
+      "draft_id": "D-20261004-03",
+      "draft_version": 1,
+      "content_sha256": "9c41e07b2a5d6f80e1c3b49a7d2265f0c8e1b3a4d5f60718293a4b5c6d7e8f90",
+      "recipients_sha256": "0b7e2d9c4a1f58e36d0c2b9a8f7e6d5c4b3a29180f7e6d5c4b3a291807f6e5d4",
+      "recipient": [
+        "alex.chen@example.net"
+      ],
+      "recipient_count": 1,
+      "recipient_domain": [
+        "example.net"
+      ],
+      "external_recipient_count": 1,
+      "checks": {
+        "external": "flag",
+        "lookalike": "pass",
+        "reply_to_mismatch": "flag",
+        "recipient_from_content": "flag",
+        "new_recipient": "pass",
+        "mass_send": "pass",
+        "secrets": "pass",
+        "sensitive_data": "pass",
+        "attachments": "pass",
+        "links": "pass",
+        "payment": "pass",
+        "untrusted_text": "pass"
+      },
+      "untrusted_content_flag": true,
+      "action": "allowed",
+      "annotations": {
+        "mitre_atlas": [
+          "AML.T0051.001"
+        ]
+      },
+      "agent_action_taken": "drafted"
+    }
+  },
+  {
+    "time": 1791142325,
+    "host": "agent-runtime-01",
+    "source": "secure-agent-ops:draft-before-send",
+    "sourcetype": "secure_agent_ops:draft_before_send",
+    "index": "<your_agent_audit_index>",
+    "event": {
+      "user": "agent-exec-assistant",
+      "user_type": "ai_agent",
+      "token_id": "tok-ea-07",
+      "owner": "jordan.rivera",
+      "src_user": "jordan.rivera@example.com",
+      "channel": "email",
+      "thread_id": "thr-88412",
+      "trigger": "owner_request",
+      "time": "2026-10-04T19:32:05Z",
+      "event_type": "send_approval_requested",
+      "draft_id": "D-20261004-03",
+      "draft_version": 1,
+      "content_sha256": "9c41e07b2a5d6f80e1c3b49a7d2265f0c8e1b3a4d5f60718293a4b5c6d7e8f90",
+      "recipients_sha256": "0b7e2d9c4a1f58e36d0c2b9a8f7e6d5c4b3a29180f7e6d5c4b3a291807f6e5d4",
+      "recipient": [
+        "alex.chen@example.net"
+      ],
+      "recipient_count": 1,
+      "recipient_domain": [
+        "example.net"
+      ],
+      "external_recipient_count": 1,
+      "approval_id": "APR-20261004-03",
+      "approval_expires": "2026-10-04T20:33:00Z",
+      "checks": {
+        "external": "flag",
+        "lookalike": "pass",
+        "reply_to_mismatch": "flag",
+        "recipient_from_content": "flag",
+        "new_recipient": "pass",
+        "mass_send": "pass",
+        "secrets": "pass",
+        "sensitive_data": "pass",
+        "attachments": "pass",
+        "links": "pass",
+        "payment": "pass",
+        "untrusted_text": "pass"
+      },
+      "untrusted_content_flag": true,
+      "action": "allowed",
+      "agent_action_taken": "requested_approval"
+    }
+  },
+  {
+    "time": 1791142920,
+    "host": "agent-runtime-01",
+    "source": "secure-agent-ops:draft-before-send",
+    "sourcetype": "secure_agent_ops:draft_before_send",
+    "index": "<your_agent_audit_index>",
+    "event": {
+      "user": "agent-exec-assistant",
+      "user_type": "ai_agent",
+      "token_id": "tok-ea-07",
+      "owner": "jordan.rivera",
+      "src_user": "jordan.rivera@example.com",
+      "channel": "email",
+      "thread_id": "thr-88412",
+      "trigger": "owner_request",
+      "time": "2026-10-04T19:42:00Z",
+      "event_type": "send_approval_decision",
+      "draft_id": "D-20261004-03",
+      "draft_version": 1,
+      "content_sha256": "9c41e07b2a5d6f80e1c3b49a7d2265f0c8e1b3a4d5f60718293a4b5c6d7e8f90",
+      "recipients_sha256": "0b7e2d9c4a1f58e36d0c2b9a8f7e6d5c4b3a29180f7e6d5c4b3a291807f6e5d4",
+      "recipient": [
+        "alex.chen@example.net"
+      ],
+      "recipient_count": 1,
+      "recipient_domain": [
+        "example.net"
+      ],
+      "external_recipient_count": 1,
+      "approval_id": "APR-20261004-03",
+      "approval_decision": "approved",
+      "approved_by": "jordan.rivera",
+      "approval_expires": "2026-10-04T20:33:00Z",
+      "action": "allowed",
+      "agent_action_taken": "none"
+    }
+  },
+  {
+    "time": 1791142930,
+    "host": "agent-runtime-01",
+    "source": "secure-agent-ops:draft-before-send",
+    "sourcetype": "secure_agent_ops:draft_before_send",
+    "index": "<your_agent_audit_index>",
+    "event": {
+      "user": "agent-exec-assistant",
+      "user_type": "ai_agent",
+      "token_id": "tok-ea-07",
+      "owner": "jordan.rivera",
+      "src_user": "jordan.rivera@example.com",
+      "channel": "email",
+      "thread_id": "thr-88412",
+      "trigger": "owner_request",
+      "time": "2026-10-04T19:42:10Z",
+      "event_type": "send_executed",
+      "draft_id": "D-20261004-03",
+      "draft_version": 1,
+      "content_sha256": "9c41e07b2a5d6f80e1c3b49a7d2265f0c8e1b3a4d5f60718293a4b5c6d7e8f90",
+      "recipients_sha256": "0b7e2d9c4a1f58e36d0c2b9a8f7e6d5c4b3a29180f7e6d5c4b3a291807f6e5d4",
+      "recipient": [
+        "alex.chen@example.net"
+      ],
+      "recipient_count": 1,
+      "recipient_domain": [
+        "example.net"
+      ],
+      "external_recipient_count": 1,
+      "approval_id": "APR-20261004-03",
+      "approval_decision": "approved",
+      "approved_by": "jordan.rivera",
+      "standing_permission_id": "",
+      "checks": {
+        "external": "flag",
+        "lookalike": "pass",
+        "reply_to_mismatch": "flag",
+        "recipient_from_content": "flag",
+        "new_recipient": "pass",
+        "mass_send": "pass",
+        "secrets": "pass",
+        "sensitive_data": "pass",
+        "attachments": "pass",
+        "links": "pass",
+        "payment": "pass",
+        "untrusted_text": "pass"
+      },
+      "untrusted_content_flag": true,
+      "action": "allowed",
+      "message_id": "<20261004194210.88412@mail.example.com>",
+      "agent_action_taken": "sent"
+    }
+  },
+  {
+    "time": 1791143100,
+    "host": "agent-runtime-01",
+    "source": "secure-agent-ops:draft-before-send",
+    "sourcetype": "secure_agent_ops:draft_before_send",
+    "index": "<your_agent_audit_index>",
+    "event": {
+      "user": "agent-exec-assistant",
+      "user_type": "ai_agent",
+      "token_id": "tok-ea-07",
+      "owner": "jordan.rivera",
+      "src_user": "jordan.rivera@example.com",
+      "channel": "email",
+      "thread_id": "thr-88412",
+      "trigger": "owner_request",
+      "time": "2026-10-04T19:45:00Z",
+      "event_type": "send_draft_created",
+      "draft_id": "D-20261004-04",
+      "draft_version": 1,
+      "content_sha256": "3e7a90c1d4f2b8a6e5d4c3b2a1908f7e6d5c4b3a2918f7e6d5c4b3a2918f7e6d",
+      "recipients_sha256": "7d6c5b4a3928170f6e5d4c3b2a1908f7e6d5c4b3a29180f7e6d5c4b3a2918f7e",
+      "recipient": [
+        "sam.okafor@example.net"
+      ],
+      "recipient_count": 1,
+      "recipient_domain": [
+        "example.net"
+      ],
+      "external_recipient_count": 1,
+      "checks": {
+        "external": "flag",
+        "lookalike": "pass",
+        "reply_to_mismatch": "pass",
+        "recipient_from_content": "pass",
+        "new_recipient": "flag",
+        "mass_send": "pass",
+        "secrets": "pass",
+        "sensitive_data": "pass",
+        "attachments": "pass",
+        "links": "pass",
+        "payment": "pass",
+        "untrusted_text": "pass"
+      },
+      "untrusted_content_flag": false,
+      "action": "allowed",
+      "agent_action_taken": "drafted"
+    }
+  },
+  {
+    "time": 1791143105,
+    "host": "agent-runtime-01",
+    "source": "secure-agent-ops:draft-before-send",
+    "sourcetype": "secure_agent_ops:draft_before_send",
+    "index": "<your_agent_audit_index>",
+    "event": {
+      "user": "agent-exec-assistant",
+      "user_type": "ai_agent",
+      "token_id": "tok-ea-07",
+      "owner": "jordan.rivera",
+      "src_user": "jordan.rivera@example.com",
+      "channel": "email",
+      "thread_id": "thr-88412",
+      "trigger": "owner_request",
+      "time": "2026-10-04T19:45:05Z",
+      "event_type": "send_approval_requested",
+      "draft_id": "D-20261004-04",
+      "draft_version": 1,
+      "content_sha256": "3e7a90c1d4f2b8a6e5d4c3b2a1908f7e6d5c4b3a2918f7e6d5c4b3a2918f7e6d",
+      "recipients_sha256": "7d6c5b4a3928170f6e5d4c3b2a1908f7e6d5c4b3a29180f7e6d5c4b3a2918f7e",
+      "recipient": [
+        "sam.okafor@example.net"
+      ],
+      "recipient_count": 1,
+      "recipient_domain": [
+        "example.net"
+      ],
+      "external_recipient_count": 1,
+      "approval_id": "APR-20261004-04",
+      "approval_expires": "2026-10-04T20:45:00Z",
+      "checks": {
+        "external": "flag",
+        "lookalike": "pass",
+        "reply_to_mismatch": "pass",
+        "recipient_from_content": "pass",
+        "new_recipient": "flag",
+        "mass_send": "pass",
+        "secrets": "pass",
+        "sensitive_data": "pass",
+        "attachments": "pass",
+        "links": "pass",
+        "payment": "pass",
+        "untrusted_text": "pass"
+      },
+      "untrusted_content_flag": false,
+      "action": "allowed",
+      "agent_action_taken": "requested_approval"
+    }
+  }
+]

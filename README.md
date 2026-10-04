@@ -8,7 +8,7 @@ AI agents are a new kind of privileged identity. They read untrusted content, ca
 
 It documents how I design and run a small personal multi-agent assistant safely, and it shares reusable security skills you can try yourself.
 
-**Two parts, two audiences.** The [operating model](docs/operating-model.md) is personal: it describes how I run my own multi-agent assistant safely day to day. The [skills](skills/) are enterprise security use cases (SOC alert triage, prompt-injection defense, and access governance) that anyone can adapt and use at work. Both are built and tested on synthetic data only.
+**Two parts, two audiences.** The [operating model](docs/operating-model.md) is personal: it describes how I run my own multi-agent assistant safely day to day. The [skills](skills/) are enterprise security use cases (SOC alert triage, prompt-injection defense, access governance, AI governance, and approval before outbound messages) that anyone can adapt and use at work. Both are built and tested on synthetic data only.
 
 ## What's here
 
@@ -38,7 +38,7 @@ Each skill is a folder with a `SKILL.md` file: plain-language instructions an AI
 - [x] Skill: untrusted content and prompt-injection guard
 - [x] Skill: access review and least-privilege audit
 - [x] Skill: AI governance checklist (NIST AI RMF, ISO/IEC 42001)
-- [ ] Skill: draft-before-send for outbound messages
+- [x] Skill: draft-before-send for outbound messages
 
 ## Ground rules
 

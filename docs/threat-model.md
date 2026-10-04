@@ -2,12 +2,13 @@
 
 This threat model covers an AI agent that reads untrusted content, holds tools and
 credentials, keeps memory, and acts for a person or a team. It ties the
-[operating model](operating-model.md) to the four skills in [`skills/`](../skills/):
+[operating model](operating-model.md) to the five skills in [`skills/`](../skills/):
 
 - [`soc-alert-triage`](../skills/soc-alert-triage/SKILL.md)
 - [`untrusted-content-guard`](../skills/untrusted-content-guard/SKILL.md)
 - [`access-review`](../skills/access-review/SKILL.md)
 - [`ai-governance-checklist`](../skills/ai-governance-checklist/SKILL.md)
+- [`draft-before-send`](../skills/draft-before-send/SKILL.md)
 
 It's written for two readers: me, running a small personal multi-agent assistant, and a
 security team that wants to deploy agents at work. Every name, domain, account, and number
@@ -55,6 +56,7 @@ The control IDs used throughout:
 | AR Fn | An access-review check | [`access-review`](../skills/access-review/SKILL.md) |
 | GC-nn | An AI governance control | [`ai-governance-checklist`](../skills/ai-governance-checklist/SKILL.md) |
 | SAT | The SOC alert triage procedure | [`soc-alert-triage`](../skills/soc-alert-triage/SKILL.md) |
+| DBS An | A draft-before-send approval rule (A1 to A10), or DBS for its checks and audit trail | [`draft-before-send`](../skills/draft-before-send/SKILL.md) |
 
 The core assumption: **prompt injection is not solved.** A model can be talked into
 anything. So the real limits are on what the agent can do (capabilities), not on what it
@@ -146,19 +148,19 @@ flowchart LR
 
 | ID | Threat | OWASP LLM 2026 | MITRE ATLAS (verified) | Primary controls |
 |---|---|---|---|---|
-| T1 | Indirect prompt injection leads to an unwanted action | LLM01, LLM03 | AML.T0051.001, AML.T0053, AML.T0068, AML.T0094 | OM §7, §8; UCG; GC-10, GC-12, GC-15 |
-| T2 | Data exfiltration through a tool or rendered output | LLM02, LLM10 | AML.T0086, AML.T0077, AML.T0057 | OM §7, §8; UCG D6, D13; GC-19 |
+| T1 | Indirect prompt injection leads to an unwanted action | LLM01, LLM03 | AML.T0051.001, AML.T0053, AML.T0068, AML.T0094 | OM §7, §8; UCG; DBS; GC-10, GC-12, GC-15 |
+| T2 | Data exfiltration through a tool or rendered output | LLM02, LLM10 | AML.T0086, AML.T0077, AML.T0057 | OM §7, §8; DBS; UCG D6, D13; GC-19 |
 | T3 | Over-scoped or stolen agent credentials | LLM03 | AML.T0083, AML.T0098, AML.T0055, AML.T0091.000, AML.T0012 | OM §7; AR F8, F9, F10; GC-10 |
 | T4 | Memory and context poisoning | LLM01 | AML.T0080.000, AML.T0080.001, AML.T0051.002 | OM §4; UCG D11, D12 |
 | T5 | Retrieval poisoning and permission bypass | LLM09, LLM05, LLM02 | AML.T0070, AML.T0066, AML.T0099, AML.T0085.000 | GC-08, GC-23 |
 | T6 | Tool, connector, and model supply chain | LLM04 | AML.T0010.005, AML.T0110.002, AML.T0109 | OM §7; GC-09, GC-20, GC-25 |
 | T7 | Hidden context exposure | LLM08 | AML.T0056, AML.T0069.002, AML.T0084.001 | OM §4; GC-12 |
-| T8 | Misleading approval requests and approval fatigue | LLM01, LLM07 | AML.T0051.001 (when content-driven) | OM §8; GC-15, GC-22 |
+| T8 | Misleading approval requests and approval fatigue | LLM01, LLM07 | AML.T0051.001 (when content-driven) | OM §8; DBS A1–A10; GC-15, GC-22 |
 | T9 | Confident but wrong security decisions | LLM07 | AML.T0130 (when adversary-driven) | SAT; AR; GC-11, GC-15 |
-| T10 | Destructive or irreversible actions | LLM03 | AML.T0101, AML.T0048.000 | OM §7, §8; GC-15, GC-18 |
+| T10 | Destructive or irreversible actions | LLM03 | AML.T0101, AML.T0048.000 | OM §7, §8; DBS; GC-15, GC-18 |
 | T11 | Runaway loops and unbounded consumption | LLM06 | AML.T0034.002, AML.T0029 | OM §6, §7 (stop condition); GC-17 |
-| T12 | Cross-agent confused deputy | LLM01, LLM03 | AML.T0053 | OM §3, §4 |
-| T13 | Audit gaps, secrets in logs, covered tracks | LLM02 | AML.T0092, AML.T0081 | OM §9; GC-17, GC-18 |
+| T12 | Cross-agent confused deputy | LLM01, LLM03 | AML.T0053 | OM §3, §4; DBS A8 |
+| T13 | Audit gaps, secrets in logs, covered tracks | LLM02 | AML.T0092, AML.T0081 | OM §9; DBS audit trail; GC-17, GC-18 |
 | T14 | Governance drift: shadow agents, self-approval, stale access | LLM03, LLM04 | AML.T0012 (dormant credentials) | GC-01, GC-02, GC-20, GC-21; AR F9, F10 |
 
 ATLAS tactics for the techniques above, from the 2026.09 data:
@@ -238,6 +240,7 @@ agent into a tool call the human didn't ask for. This is the defining threat for
 | Treat all outside content as data; quote and flag embedded instructions; never act on them | OM §7; UCG (procedure steps 1–8, D1–D14) |
 | Severity tracks capability: the same injection is worse when the agent holds a matching tool | UCG severity scale |
 | No consequential tool runs without per-action approval; acting on external instructions is in the "Never" column | OM §8; GC-15 |
+| Content can't request, approve, or choose recipients for a send | DBS step 2, A7 |
 | Minimal tools and scopes per role, so most injected requests have nothing to call | OM §2, §7; GC-10; AR F10 |
 | Alert fields are scanned before triage, and the triage output is a draft for an analyst | SAT step 2; SAT guardrails |
 | Injection tested through every untrusted input before go-live | GC-12; `untrusted-content-guard` evals |
@@ -285,7 +288,8 @@ markdown whose image or link URL carries data. That URL fires when the output is
 
 | Mitigation | Owner control |
 |---|---|
-| Sending, forwarding, and new recipients need approval; drafts are the default | OM §7, §8 |
+| Sending, forwarding, and new recipients need approval; drafts are the default | OM §7, §8; DBS A1–A3 |
+| Recipient and data checks before drafting: external, lookalike, reply-to mismatch, content-sourced recipients, secrets, sensitive data, remote images | DBS steps 3–4 |
 | Flag tool retargeting (new recipient or endpoint) and URLs that carry data | UCG D6, D13 |
 | Outputs never auto-fetch external images or links; outputs to other systems are validated | GC-19 |
 | Mask or minimize personal data at the prompt and output boundary | GC-14 |
@@ -522,7 +526,7 @@ click "approve".
 | Approval only for consequential actions, so requests stay rare and meaningful | OM §8 |
 | Flag "approval laundering" in content ("pre-approved", "already confirmed") | UCG D7 |
 | Reviewers trained on their oversight duties | GC-22 |
-| Planned: a draft-before-send skill that standardizes what an approval shows | Roadmap; residual risk R1 |
+| Draft cards show the full body, every recipient, attachments with hashes, the reason, and check results; approvals are explicit, single-use, and bound to a content hash | DBS steps 5–7, A1–A3 |
 
 **Detection ideas:**
 
@@ -583,6 +587,7 @@ injection or by a misunderstood request.
 |---|---|
 | No agent holds a credential that can move money, send mail, or publish on its own | OM §2 |
 | Delete, pay, submit, and transfer need approval | OM §8; GC-15 |
+| Payment and bank-detail messages flagged as fraud risk; declined sends are final, with no workarounds | DBS step 4, A4, A10 |
 | Multi-step submissions drafted offline; the human does the final step | OM §10 |
 | Kill switch and rollback plan | GC-18 |
 
@@ -641,6 +646,7 @@ it was only meant to watch.
 | One owner per task; the owner is named in the handoff; copied agents comment but don't act | OM §3 |
 | Minimal context packets, not whole threads or memory dumps | OM §3 |
 | Disagreements go up to the human, not sideways | OM §3 |
+| Another agent can't approve a send or hand over a "pre-approved" draft | DBS A6, A8 |
 | Content that came from outside stays labeled untrusted across handoffs | UCG trust boundaries; residual risk R4 |
 
 **Detection ideas:** consequential or memory-write calls by an agent that isn't the
@@ -667,6 +673,7 @@ Logs miss the fields needed to reconstruct an incident, or contain secrets. Or a
 | Enterprise systems keep a defined incident evidence set (input, context, output, model version, retrieved sources, both identities) | GC-17, GC-18 |
 | Disabling logging or bypassing an approval is in the "Never" column | OM §8 |
 | Weekly self-audit read like an access review | OM §9 |
+| Every draft, approval, send, block, standing-permission change, and auto-reply change emits an audit event, with sends checked against the mail system's own logs | DBS audit trail, detection 4 |
 
 **Detection ideas:**
 
@@ -715,13 +722,13 @@ by their own owners.
 | `soc-alert-triage` | T1 (alert-field injection), T9 |
 | `access-review` | T3, T14 |
 | `ai-governance-checklist` | T5, T6, T9, T13, T14, plus a pre-launch check of all the others |
-| Planned draft-before-send skill | T2, T8, T10 |
+| `draft-before-send` | T1, T2, T8, T10, T12, T13 |
 
 ## 7. Residual risks and open gaps
 
 | # | Residual risk or gap | Why it remains | Next step |
 |---|---|---|---|
-| R1 | **The draft-before-send skill isn't built yet.** Draft before send is a guardrail in the operating model, but there's no skill, output template, or eval that standardizes what an approval request shows or checks a draft for planted links and wrong recipients | Planned on the roadmap | Build the skill, with eval cases for retargeted recipients, data-carrying links, and misleading summaries (T2, T8) |
+| R1 | **Draft-before-send relies on the model unless the send tool enforces it.** The skill now defines the draft card, single-use approvals bound to a content hash, recipient and data checks, and an audit trail. But a fooled or buggy agent can still call a send tool directly if the tool doesn't check the approval itself | Most agent platforms don't verify approvals inside send tools | Have send tools reject calls without a matching approval ID and hash; keep the mail-log detection (DBS detection 4) as the backstop; run the `draft-before-send` evals |
 | R2 | **Role cards and the machine-readable approval matrix aren't published.** `agents/` and `guardrails/` are placeholders | Work in progress | Publish them, and generate the `agent_role_cards.csv` and allowlist lookups used in the detections from them |
 | R3 | **Injection detection is model-based and will miss things.** | No reliable classifier exists | Keep capability limits and approvals as the real control; keep adding eval cases |
 | R4 | **Trust labels can be lost across handoffs and memory.** An agent may summarize untrusted content into a "fact" that later looks trusted | Labels are a convention, not enforced by the platform | Carry a source and trust field with every memory entry and handoff packet; test it with an eval |
