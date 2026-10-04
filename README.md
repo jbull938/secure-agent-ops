@@ -33,7 +33,7 @@ Each skill is a folder with a `SKILL.md` file: plain-language instructions an AI
 
 - [ ] Operating model and threat model
 - [x] Skill: SOC alert triage (Splunk ES-style, sample data)
-- [ ] Skill: untrusted content and prompt-injection guard
+- [x] Skill: untrusted content and prompt-injection guard
 - [ ] Skill: access review and least-privilege audit
 - [ ] Skill: AI governance checklist (NIST AI RMF, ISO/IEC 42001)
 - [ ] Skill: draft-before-send for outbound messages
