@@ -14,7 +14,7 @@ It documents how I design and run a small personal multi-agent assistant safely,
 
 | Folder | What it holds |
 |---|---|
-| `docs/` | The operating model (roles, routing, memory, guardrails) and a threat model mapped to the OWASP Top 10 for LLM Applications and MITRE ATLAS |
+| `docs/` | The [operating model](docs/operating-model.md) (roles, routing, memory, guardrails) and a [threat model](docs/threat-model.md) mapped to the OWASP Top 10 for LLM Applications 2026 and MITRE ATLAS |
 | `skills/` | Reusable skills in the open Agent Skills (`SKILL.md`) format |
 | `agents/` | One role card per agent: purpose, allowed tools, and when it must escalate to a human |
 | `guardrails/` | Policy files: approval matrix, tool allowlist, stop conditions |
@@ -33,7 +33,7 @@ Each skill is a folder with a `SKILL.md` file: plain-language instructions an AI
 
 ## Roadmap
 
-- [ ] Operating model and threat model
+- [x] Operating model and threat model
 - [x] Skill: SOC alert triage (Splunk ES-style, sample data)
 - [x] Skill: untrusted content and prompt-injection guard
 - [x] Skill: access review and least-privilege audit

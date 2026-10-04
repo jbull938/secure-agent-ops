@@ -5,7 +5,7 @@ license: MIT
 metadata:
   version: "0.1.1"
   data: synthetic samples only
-  frameworks_checked: "OWASP Top 10 for LLM Applications 2026 (released 4 Aug 2026); MITRE ATLAS data v5.6.0 (checked 2026-10-04)"
+  frameworks_checked: "OWASP Top 10 for LLM Applications 2026 (released 4 Aug 2026); MITRE ATLAS release 2026.09 (checked 2026-10-04)"
 ---
 
 # Untrusted content and prompt-injection guard
