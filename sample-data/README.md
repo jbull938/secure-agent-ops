@@ -23,5 +23,14 @@ documentation ranges. Each file is marked as a synthetic sample.
 - `content-006-support-ticket-base64.json`: help-desk ticket with a base64-encoded instruction
 - `content-007-forged-delimiter.txt`: planning notes with a forged end-of-data marker and a fake user turn
 
+## `access-review/` - for [`access-review`](../skills/access-review/SKILL.md)
+
+Synthetic CSV files as of 2026-10-01, with standard headers so any spreadsheet or SIEM can load them directly.
+
+- `access-export.csv`: 32 account and entitlement rows across FinanceERP, CloudConsole, and CollabSuite, with planted leavers, a mover, SoD conflicts, shared and service accounts, missing MFA, and an injection in one `notes` field
+- `hr-roster.csv`: 15 people with status, end dates, transfers, a leave of absence, and a contractor end-date conflict
+- `role-definitions.csv`: eligibility, privilege, and SoD conflicts per entitlement, plus AI agent scopes drawn from the operating model's role cards
+- `ai-agent-identities.csv`: 6 agent tokens with scopes, owners, expiry, and last use
+
 The files in `untrusted/` contain prompt-injection text on purpose. Don't point an agent with
 real send, share, or delete tools at them outside a test harness.

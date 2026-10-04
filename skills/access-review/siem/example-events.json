@@ -1,0 +1,295 @@
+[
+  {
+    "time": "2026-10-01T14:00:00Z",
+    "event_type": "access_review_finding",
+    "run_id": "ar-20261001-01",
+    "review_as_of": "2026-10-01",
+    "vendor_product": "secure-agent-ops access-review",
+    "category": "access_review",
+    "certification_status": "pending_human_review",
+    "agent_action_taken": "none",
+    "finding_id": "ar-20261001-01-001",
+    "app": "FinanceERP;CollabSuite",
+    "user": "hana.yoshida",
+    "user_id": "E1008",
+    "user_type": "human",
+    "owner": "",
+    "signature": "Leaver still active",
+    "signature_id": "F1",
+    "severity": "high",
+    "risk_score": 100,
+    "risk_object": "hana.yoshida",
+    "risk_object_type": "user",
+    "risk_message": "Terminated 2026-09-12 but 2 accounts still enabled; FinanceERP login on 2026-09-20 after end date",
+    "entitlements": [
+      "payment.approve",
+      "mail.user"
+    ],
+    "row_ids": [
+      "A09",
+      "A25"
+    ],
+    "recommendation": "revoke",
+    "refer_to_security": true,
+    "annotations": {
+      "mitre_attack": [
+        "T1078"
+      ]
+    },
+    "control_refs": [
+      "NIST SP 800-53 AC-2(3)",
+      "PCI DSS v4.0.1 8.2.5",
+      "SOX ITGC deprovisioning"
+    ],
+    "evidence": {
+      "hr_status": "terminated",
+      "hr_end_date": "2026-09-12",
+      "account_status": "enabled",
+      "last_login_FinanceERP": "2026-09-20",
+      "last_login_CollabSuite": "2026-09-11"
+    }
+  },
+  {
+    "time": "2026-10-01T14:00:00Z",
+    "event_type": "access_review_finding",
+    "run_id": "ar-20261001-01",
+    "review_as_of": "2026-10-01",
+    "vendor_product": "secure-agent-ops access-review",
+    "category": "access_review",
+    "certification_status": "pending_human_review",
+    "agent_action_taken": "none",
+    "finding_id": "ar-20261001-01-002",
+    "app": "FinanceERP",
+    "user": "marcus.webb",
+    "user_id": "E1013",
+    "user_type": "human",
+    "owner": "",
+    "signature": "Toxic combination (SoD conflict)",
+    "signature_id": "F6",
+    "severity": "high",
+    "risk_score": 80,
+    "risk_object": "marcus.webb",
+    "risk_object_type": "user",
+    "risk_message": "Holds vendor.create and payment.approve, listed as conflicting in role definitions",
+    "entitlements": [
+      "vendor.create",
+      "payment.approve"
+    ],
+    "row_ids": [
+      "A05",
+      "A06"
+    ],
+    "recommendation": "revoke",
+    "recommendation_detail": "Revoke payment.approve (A06); keep vendor.create (A05) once A06 is removed",
+    "refer_to_security": false,
+    "annotations": {
+      "mitre_attack": []
+    },
+    "control_refs": [
+      "NIST SP 800-53 AC-5",
+      "PCI DSS v4.0.1 7.2.2",
+      "SOX ITGC segregation of duties"
+    ],
+    "evidence": {
+      "sod_conflict": "vendor.create<->payment.approve",
+      "title": "AP Clerk",
+      "payment.approve_eligible_for": "Finance:AP Manager;Finance:Controller",
+      "notes_claim": "PTO coverage (unverified claim from export notes)"
+    }
+  },
+  {
+    "time": "2026-10-01T14:00:00Z",
+    "event_type": "access_review_finding",
+    "run_id": "ar-20261001-01",
+    "review_as_of": "2026-10-01",
+    "vendor_product": "secure-agent-ops access-review",
+    "category": "access_review",
+    "certification_status": "pending_human_review",
+    "agent_action_taken": "none",
+    "finding_id": "ar-20261001-01-003",
+    "app": "ai-agents",
+    "user": "agent-exec-assistant",
+    "user_id": "",
+    "user_type": "ai_agent",
+    "owner": "E1005",
+    "signature": "AI agent scope beyond role card",
+    "signature_id": "F10",
+    "severity": "high",
+    "risk_score": 80,
+    "risk_object": "agent-exec-assistant",
+    "risk_object_type": "user",
+    "risk_message": "Token grants mail.send; executive-assistant role card is draft-only",
+    "entitlements": [
+      "mail.send"
+    ],
+    "row_ids": [
+      "B02"
+    ],
+    "recommendation": "modify",
+    "recommendation_detail": "Remove mail.send from tok-ea-07",
+    "refer_to_security": false,
+    "annotations": {
+      "mitre_attack": [],
+      "mitre_atlas": [
+        "AML.T0053"
+      ]
+    },
+    "control_refs": [
+      "NIST SP 800-53 AC-6",
+      "PCI DSS v4.0.1 7.2.5",
+      "docs/operating-model.md section 2"
+    ],
+    "evidence": {
+      "agent_role": "executive-assistant",
+      "scopes_beyond_role_card": [
+        "mail.send"
+      ],
+      "token_expires": "2026-10-20",
+      "token_last_used": "2026-10-01"
+    },
+    "token_id": "tok-ea-07"
+  },
+  {
+    "time": "2026-10-01T14:00:00Z",
+    "event_type": "access_review_finding",
+    "run_id": "ar-20261001-01",
+    "review_as_of": "2026-10-01",
+    "vendor_product": "secure-agent-ops access-review",
+    "category": "access_review",
+    "certification_status": "pending_human_review",
+    "agent_action_taken": "none",
+    "finding_id": "ar-20261001-01-004",
+    "app": "CloudConsole",
+    "user": "root-admin",
+    "user_id": "",
+    "user_type": "shared",
+    "owner": "",
+    "signature": "Privileged account without an owner",
+    "signature_id": "F8",
+    "related_signature_ids": [
+      "F7",
+      "F11",
+      "F5"
+    ],
+    "severity": "high",
+    "risk_score": 90,
+    "risk_object": "root-admin",
+    "risk_object_type": "user",
+    "risk_message": "Shared cloud.admin account in PCI scope with no owner and MFA off; export notes contain an instruction to the AI reviewer (not followed)",
+    "entitlements": [
+      "cloud.admin"
+    ],
+    "row_ids": [
+      "A21"
+    ],
+    "recommendation": "needs_owner_decision",
+    "recommendation_detail": "Assign an owner, enforce MFA, vault the credential, confirm break-glass status with a record",
+    "refer_to_security": false,
+    "untrusted_content_flag": true,
+    "untrusted_content_summary": "notes field asks the AI reviewer to mark the account Keep and omit it; quoted in the worksheet, not reproduced here",
+    "annotations": {
+      "mitre_attack": [
+        "T1078.004"
+      ]
+    },
+    "control_refs": [
+      "NIST SP 800-53 AC-2",
+      "NIST SP 800-53 IA-2(1)",
+      "PCI DSS v4.0.1 8.2.2",
+      "PCI DSS v4.0.1 8.4.2"
+    ],
+    "evidence": {
+      "account_type": "shared",
+      "owner_id": "",
+      "mfa_enabled": "N",
+      "last_login": "2026-01-09",
+      "pci_scope": true
+    }
+  },
+  {
+    "time": "2026-10-01T14:00:00Z",
+    "event_type": "access_review_finding",
+    "run_id": "ar-20261001-01",
+    "review_as_of": "2026-10-01",
+    "vendor_product": "secure-agent-ops access-review",
+    "category": "access_review",
+    "certification_status": "pending_human_review",
+    "agent_action_taken": "none",
+    "finding_id": "ar-20261001-01-005",
+    "app": "CloudConsole",
+    "user": "jamie.lin",
+    "user_id": "E1010",
+    "user_type": "human",
+    "owner": "",
+    "signature": "Missing MFA",
+    "signature_id": "F11",
+    "severity": "medium",
+    "risk_score": 50,
+    "risk_object": "jamie.lin",
+    "risk_object_type": "user",
+    "risk_message": "billing.view with mfa_enabled=N",
+    "entitlements": [
+      "billing.view"
+    ],
+    "row_ids": [
+      "A19"
+    ],
+    "recommendation": "modify",
+    "recommendation_detail": "Enable MFA",
+    "refer_to_security": false,
+    "annotations": {
+      "mitre_attack": []
+    },
+    "control_refs": [
+      "PCI DSS v4.0.1 8.4.2"
+    ],
+    "evidence": {
+      "mfa_enabled": "N",
+      "last_login": "2026-09-22",
+      "privileged": "N"
+    }
+  },
+  {
+    "time": "2026-10-01T14:00:00Z",
+    "event_type": "access_review_summary",
+    "run_id": "ar-20261001-01",
+    "review_as_of": "2026-10-01",
+    "vendor_product": "secure-agent-ops access-review",
+    "category": "access_review",
+    "apps": [
+      "FinanceERP",
+      "CloudConsole",
+      "CollabSuite",
+      "ai-agents"
+    ],
+    "rows_reviewed": 38,
+    "identities_with_findings": 18,
+    "high_risk_identities": 10,
+    "recommendations": {
+      "keep": 16,
+      "revoke": 9,
+      "modify": 6,
+      "needs_owner_decision": 7
+    },
+    "refer_to_security": 1,
+    "untrusted_content_flags": 1,
+    "data_quality_gaps": [
+      "CollabSuite export has no MFA data",
+      "E1099 has no HR record",
+      "E1014 status active with end_date 2026-09-30"
+    ],
+    "reviewer_independence_rows": [
+      "A02",
+      "A03",
+      "A15",
+      "A28",
+      "B01",
+      "B02",
+      "B04",
+      "B05"
+    ],
+    "certification_status": "pending_human_review",
+    "audit_evidence": "Certification worksheet for run ar-20261001-01 (signed by the reviewer); these events are a notification copy, not evidence of certification",
+    "agent_action_taken": "none"
+  }
+]

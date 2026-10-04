@@ -1,0 +1,7 @@
+row_id,agent_id,agent_role,owner_employee_id,token_id,scopes,token_created,token_expires,token_last_used,status,notes
+B01,agent-chief,chief-router,E1005,tok-chief-01,tasks.read;memory.shared.read;handoff.create,2026-09-15,2026-10-15,2026-10-01,active,
+B02,agent-exec-assistant,executive-assistant,E1005,tok-ea-07,mail.read;mail.label;mail.draft;mail.send;calendar.read;calendar.propose,2026-09-20,2026-10-20,2026-10-01,active,Send scope added during inbox-zero pilot.
+B03,agent-finance,finance,E1003,tok-fin-03,finance.accounts.read;finance.transactions.read;sheets.own.write,2026-09-10,2026-10-10,2026-09-30,active,
+B04,agent-business-admin,business-admin,E1005,tok-ba-02,docs.readwrite:business-admin-folder;docs.readwrite:*;calendar.read,2026-09-25,2026-10-25,2026-09-30,active,
+B05,agent-career,career,E1005,tok-career-01,docs.readwrite:career-folder;web.search;posts.draft,2026-01-12,,2026-05-04,active,
+B06,agent-research-pilot,,,tok-rp-01,web.search;mail.read;docs.read:*,2026-04-02,,2026-06-20,active,Pilot from spring hackathon.

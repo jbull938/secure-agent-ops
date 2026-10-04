@@ -1,0 +1,16 @@
+employee_id,name,email,department,title,manager_id,employment_type,status,hire_date,end_date,last_transfer_date,prior_department
+E1001,Avery Chen,avery.chen@corp.example.com,Finance,AP Clerk,E1002,employee,active,2024-03-01,,,
+E1002,Bianca Ortiz,bianca.ortiz@corp.example.com,Finance,AP Manager,E1003,employee,active,2021-06-14,,,
+E1003,Carlos Mendes,carlos.mendes@corp.example.com,Finance,Controller,E1015,employee,active,2019-09-03,,,
+E1004,Dana Kowalski,dana.kowalski@corp.example.com,IT,Cloud Engineer,E1005,employee,active,2022-01-10,,,
+E1005,Elliot Park,elliot.park@corp.example.com,IT,IT Manager,E1015,employee,active,2018-04-23,,,
+E1006,Farah Siddiqui,farah.siddiqui@corp.example.com,Sales,Account Executive,E1015,employee,active,2023-05-08,,,
+E1007,Gavin Brooks,gavin.brooks@corp.example.com,Marketing,Marketing Analyst,E1010,employee,active,2022-11-07,,2026-08-15,Finance
+E1008,Hana Yoshida,hana.yoshida@corp.example.com,Finance,AP Specialist,E1002,employee,terminated,2020-02-18,2026-09-12,,
+E1009,Ivan Petrov,ivan.petrov@corp.example.com,IT,Systems Administrator,E1005,employee,terminated,2017-08-01,2026-07-31,,
+E1010,Jamie Lin,jamie.lin@corp.example.com,Marketing,Marketing Manager,E1015,employee,active,2021-03-29,,,
+E1011,Priya Natarajan,priya.natarajan@corp.example.com,Sales,Sales Coordinator,E1006,employee,leave,2023-09-11,,,
+E1012,Lena Fischer,lena.fischer@corp.example.com,IT,Security Analyst,E1005,employee,active,2024-07-15,,,
+E1013,Marcus Webb,marcus.webb@corp.example.com,Finance,AP Clerk,E1002,employee,active,2025-01-06,,,
+E1014,Nora Haddad,nora.haddad@corp.example.com,IT,Cloud Engineer (contract),E1005,contractor,active,2026-04-01,2026-09-30,,
+E1015,Rachel Stone,rachel.stone@corp.example.com,Executive,CFO,,employee,active,2016-10-17,,,
