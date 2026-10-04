@@ -1,0 +1,26 @@
+{
+  "_synthetic": "SYNTHETIC SAMPLE for secure-agent-ops. Not real data. All hosts, users, IPs (RFC 5737 documentation ranges), and domains (example.com/.net/.org) are fictional.",
+  "alert": {
+    "alert_id": "SYN-2026-0100",
+    "rule_name": "Endpoint - Scheduled Task Created Pointing to User-Writable Path - Rule",
+    "time": "2026-09-30T15:22:10Z",
+    "severity": "medium",
+    "urgency": "medium",
+    "security_domain": "endpoint",
+    "dest": "ws-hr-019.corp.example.com",
+    "dest_ip": "198.51.100.19",
+    "user": "CORP\\lgarcia-example",
+    "process_name": "schtasks.exe",
+    "process": "schtasks.exe /create /tn \"ExampleNotesUpdater\" /tr \"C:\\Users\\lgarcia-example\\AppData\\Local\\ExampleNotes\\update.exe\" /sc daily /st 09:00",
+    "parent_process_name": "ExampleNotesSetup.exe",
+    "parent_process_path": "C:\\Users\\lgarcia-example\\Downloads\\ExampleNotesSetup.exe",
+    "parent_file_signature": "signed: ExampleNotes Software Ltd (fictional)",
+    "annotations": {"mitre_attack": ["T1053.005"]},
+    "description": "A scheduled task was created that runs an executable from a user-writable directory."
+  },
+  "context": {
+    "asset": {"hostname": "ws-hr-019.corp.example.com", "category": "workstation", "business_unit": "Human Resources", "priority": "medium", "timezone": "America/Chicago"},
+    "identity": {"user": "lgarcia-example", "full_name": "Lee Garcia (fictional)", "department": "Human Resources", "privileged": false, "account_type": "human"},
+    "approved_software_publishers": ["ExampleAgent Inc (fictional)", "Example Office Suite Corp (fictional)"]
+  }
+}

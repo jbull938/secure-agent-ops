@@ -1,0 +1,49 @@
+{
+  "_synthetic": "SYNTHETIC SAMPLE for secure-agent-ops. Not real data. All hosts, users, IPs (RFC 5737 documentation ranges), and domains (example.com/.net/.org) are fictional.",
+  "alert": {
+    "alert_id": "SYN-2026-0003",
+    "rule_name": "Network - Possible DGA Domain Lookup - Rule",
+    "time": "2026-09-29T16:41:09Z",
+    "severity": "medium",
+    "urgency": "medium",
+    "security_domain": "network",
+    "src": "ws-mkt-113.corp.example.com",
+    "src_ip": "198.51.100.113",
+    "query": "q7x2k9vz1m4p.telemetry.example.com",
+    "query_type": "A",
+    "reply_code": "NOERROR",
+    "answer": "203.0.113.80",
+    "process_name": "exampleagent.exe",
+    "entropy_score": 3.9,
+    "annotations": {
+      "mitre_attack": [
+        "T1568.002"
+      ]
+    },
+    "description": "DNS query for a high-entropy subdomain label, consistent with domain generation algorithm (DGA) behavior."
+  },
+  "context": {
+    "asset": {
+      "hostname": "ws-mkt-113.corp.example.com",
+      "category": "workstation",
+      "business_unit": "Marketing",
+      "priority": "low"
+    },
+    "approved_software": [
+      {
+        "name": "ExampleAgent endpoint telemetry client (fictional)",
+        "process": "exampleagent.exe",
+        "vendor_domains": [
+          "telemetry.example.com"
+        ],
+        "notes": "Installed fleet-wide. Uses randomized per-device subdomains under telemetry.example.com by design."
+      }
+    ],
+    "rule_history": {
+      "fires_last_7d": 1432,
+      "distinct_hosts_last_7d": 611,
+      "share_matching_telemetry_example_com": "100% of the last 7 days of hits",
+      "escalations_from_this_rule_last_90d": 0
+    }
+  }
+}

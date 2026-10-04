@@ -1,0 +1,44 @@
+{
+  "_synthetic": "SYNTHETIC SAMPLE for secure-agent-ops. Not real data. All hosts, users, IPs (RFC 5737 documentation ranges), and domains (example.com/.net/.org) are fictional.",
+  "alert": {
+    "alert_id": "SYN-2026-0004",
+    "rule_name": "Authentication - Sign-in From New Country for User - Rule",
+    "time": "2026-09-30T13:52:17Z",
+    "severity": "medium",
+    "urgency": "high",
+    "security_domain": "access",
+    "user": "snakamura@example.com",
+    "app": "Corporate webmail",
+    "src_ip": "203.0.113.57",
+    "src_country": "PT",
+    "action": "success",
+    "authentication_method": "password + MFA push",
+    "mfa_result": "approved",
+    "http_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36",
+    "previous_signin": {
+      "time": "2026-09-30T13:11:40Z",
+      "src_ip": "198.51.100.23",
+      "src_country": "US",
+      "app": "Corporate webmail"
+    },
+    "annotations": {
+      "mitre_attack": [
+        "T1078"
+      ]
+    },
+    "description": "Successful sign-in from a country not seen for this user in the last 90 days."
+  },
+  "context": {
+    "identity": {
+      "user": "snakamura@example.com",
+      "full_name": "Sam Nakamura (fictional)",
+      "department": "Sales",
+      "privileged": false,
+      "account_type": "human",
+      "usual_countries": [
+        "US"
+      ],
+      "notes": "No travel or VPN information was provided with this alert."
+    }
+  }
+}

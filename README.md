@@ -22,7 +22,7 @@ It documents how I design and run a small personal multi-agent assistant safely,
 ## Roadmap
 
 - [ ] Operating model and threat model
-- [ ] Skill: SOC alert triage (Splunk ES-style, sample data)
+- [x] Skill: SOC alert triage (Splunk ES-style, sample data)
 - [ ] Skill: untrusted content and prompt-injection guard
 - [ ] Skill: access review and least-privilege audit
 - [ ] Skill: AI governance checklist (NIST AI RMF, ISO/IEC 42001)

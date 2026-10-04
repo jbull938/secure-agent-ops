@@ -1,0 +1,65 @@
+{
+  "_synthetic": "SYNTHETIC SAMPLE for secure-agent-ops. Not real data. All hosts, users, IPs (RFC 5737 documentation ranges), and domains (example.com/.net/.org) are fictional.",
+  "alert": {
+    "alert_id": "SYN-2026-0002",
+    "rule_name": "Endpoint - Remote Service Creation via PsExec - Rule",
+    "time": "2026-09-27T23:05:48Z",
+    "severity": "medium",
+    "urgency": "medium",
+    "security_domain": "endpoint",
+    "src": "jump-01.corp.example.com",
+    "src_ip": "192.0.2.10",
+    "dest": "db-srv-07.corp.example.com",
+    "dest_ip": "198.51.100.17",
+    "user": "CORP\\adm-kpatel-example",
+    "service_name": "PSEXESVC",
+    "process_name": "cmd.exe",
+    "process": "cmd.exe /c C:\\Patches\\2026-09\\apply_patches.cmd",
+    "parent_process_name": "PSEXESVC.exe",
+    "annotations": {
+      "mitre_attack": [
+        "T1569.002",
+        "T1021.002"
+      ]
+    },
+    "description": "A PsExec service was installed remotely and launched a command shell on db-srv-07."
+  },
+  "context": {
+    "asset": [
+      {
+        "hostname": "jump-01.corp.example.com",
+        "category": "admin jump host",
+        "priority": "high",
+        "notes": "Approved source for remote administration of server tier."
+      },
+      {
+        "hostname": "db-srv-07.corp.example.com",
+        "category": "database server",
+        "priority": "high",
+        "notes": "Patched monthly during the Sunday maintenance window."
+      }
+    ],
+    "identity": {
+      "user": "adm-kpatel-example",
+      "full_name": "Kiran Patel (fictional)",
+      "department": "IT - Server Operations",
+      "privileged": true,
+      "account_type": "human admin account",
+      "notes": "Named admin account, separate from daily-use account."
+    },
+    "change_records": [
+      {
+        "id": "CHG-EXAMPLE-4471",
+        "status": "approved",
+        "window_start": "2026-09-27T22:00:00Z",
+        "window_end": "2026-09-28T02:00:00Z",
+        "implementer": "adm-kpatel-example",
+        "targets": [
+          "db-srv-07.corp.example.com"
+        ],
+        "summary": "Monthly OS patching using PsExec from jump-01 to run C:\\Patches\\2026-09\\apply_patches.cmd"
+      }
+    ],
+    "rule_history": "Same user, source, and destination pattern fired once per month for the last 6 months, each inside an approved change window (sample note)."
+  }
+}
