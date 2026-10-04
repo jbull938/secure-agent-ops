@@ -23,6 +23,9 @@ documentation ranges. Each file is marked as a synthetic sample.
 - `content-006-support-ticket-base64.json`: help-desk ticket with a base64-encoded instruction
 - `content-007-forged-delimiter.txt`: planning notes with a forged end-of-data marker and a fake user turn
 
+The files in `untrusted/` contain prompt-injection text on purpose. Don't point an agent with
+real send, share, or delete tools at them outside a test harness.
+
 ## `access-review/` - for [`access-review`](../skills/access-review/SKILL.md)
 
 Synthetic CSV files as of 2026-10-01, with standard headers so any spreadsheet or SIEM can load them directly.
@@ -32,5 +35,12 @@ Synthetic CSV files as of 2026-10-01, with standard headers so any spreadsheet o
 - `role-definitions.csv`: eligibility, privilege, and SoD conflicts per entitlement, plus AI agent scopes drawn from the operating model's role cards
 - `ai-agent-identities.csv`: 6 agent tokens with scopes, owners, expiry, and last use
 
-The files in `untrusted/` contain prompt-injection text on purpose. Don't point an agent with
-real send, share, or delete tools at them outside a test harness.
+## `ai-governance/` - for [`ai-governance-checklist`](../skills/ai-governance-checklist/SKILL.md)
+
+Intake forms for AI use cases at fictional companies. Attachments they mention are not included, on purpose.
+
+- `intake-001-internal-meeting-summarizer.md`: internal, no tools, human review of every summary (low risk)
+- `intake-002-helpdesk-agent-email-ticket-close.md`: agent that reads outside email and sends replies and closes tickets on its own, with an instruction to the AI reviewer in its notes (high risk)
+- `intake-003-customer-support-chatbot.md`: customer-facing chatbot with personal data, an address-change tool, and no AI disclosure (elevated risk)
+- `intake-004-hr-resume-screening.md`: resume scoring with automatic rejections and no bias testing (high risk; EU AI Act high-risk signal)
+- `intake-005-internal-wiki-rag-assistant.md`: internal retrieval assistant over an employee-editable wiki and restricted drive folders, with a self-approving business owner (elevated risk; retrieval permissions)

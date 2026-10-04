@@ -30,7 +30,7 @@ not contain it. The forwarding target is on a different domain from the sender
 None.
 
 ### Framework mapping
-- OWASP: LLM01:2025 Prompt Injection. Related: LLM02:2025 Sensitive Information Disclosure (invoices and payment receipts would leave the mailbox). LLM06:2025 Excessive Agency applies only if an agent reading this mailbox had forward or mail-rule tools. This one doesn't, which is why the attempt would fail here.
+- OWASP: LLM01:2026 Prompt Injection. Related: LLM02:2026 Sensitive Information Disclosure (invoices and payment receipts would leave the mailbox). LLM03:2026 Excessive Agency applies only if an agent reading this mailbox had forward or mail-rule tools. This one doesn't, which is why the attempt would fail here.
 - MITRE ATLAS: AML.T0051.001 LLM Prompt Injection: Indirect (delivered in an email the agent read). AML.T0068 LLM Prompt Obfuscation (hidden HTML). AML.T0086 Exfiltration via AI Agent Tool Invocation (attempted; requires a forwarding tool).
 
 ### Recommended handling

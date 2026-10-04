@@ -1,0 +1,102 @@
+{
+  "event_type": "ai_governance_assessment",
+  "assessment_id": "AIGOV-20261004-01",
+  "system_name": "SOC Triage Assistant",
+  "inventory_id": "AI-INV-0042",
+  "business_owner": "Mira Castellanos (fictional)",
+  "technical_owner": "Owen Achterberg (fictional)",
+  "risk_tier": "tier_2_elevated",
+  "autonomy_level": "A1",
+  "deployment_pattern": [
+    "agent_with_tools"
+  ],
+  "model_version": "unknown",
+  "last_security_test": "2026-09-18",
+  "eu_ai_act_context": "not_applicable",
+  "recommendation": "go_with_conditions",
+  "decision_status": "pending_human_decision",
+  "decision_owner": "AI Risk Committee",
+  "control_counts": {
+    "met": 11,
+    "partial": 9,
+    "gap": 2,
+    "not_applicable": 3
+  },
+  "blocking_gaps": [
+    {
+      "control_id": "GC-04",
+      "summary": "Privacy and legal review not yet done (scheduled 2026-10-20)",
+      "owner": "Owen Achterberg (fictional)",
+      "framework_refs": [
+        "NIST AI RMF GOVERN 1.1",
+        "ISO/IEC 42001 A.2.3"
+      ]
+    },
+    {
+      "control_id": "GC-07",
+      "summary": "No impact assessment; alerts contain employee personal data",
+      "owner": "Mira Castellanos (fictional)",
+      "framework_refs": [
+        "NIST AI RMF MAP 5.1",
+        "ISO/IEC 42001 A.5.2"
+      ]
+    },
+    {
+      "control_id": "GC-09",
+      "summary": "Vendor DPA and zero-retention setting referenced but not provided; training use and notice terms not stated",
+      "owner": "Owen Achterberg (fictional)",
+      "framework_refs": [
+        "NIST AI RMF GOVERN 6.1",
+        "ISO/IEC 42001 A.10.3",
+        "OWASP LLM04:2026"
+      ]
+    },
+    {
+      "control_id": "GC-10",
+      "summary": "Service identity not yet in access review; scope not independently verified",
+      "owner": "Owen Achterberg (fictional)",
+      "framework_refs": [
+        "NIST AI RMF MAP 3.5",
+        "OWASP LLM03:2026"
+      ]
+    },
+    {
+      "control_id": "GC-12",
+      "summary": "Injection tested in one field only; other alert fields and search results untested",
+      "owner": "Owen Achterberg (fictional)",
+      "framework_refs": [
+        "NIST AI RMF MEASURE 2.7",
+        "OWASP LLM01:2026"
+      ]
+    },
+    {
+      "control_id": "GC-14",
+      "summary": "Privacy review pending; retention set to 90 days",
+      "owner": "Owen Achterberg (fictional)",
+      "framework_refs": [
+        "NIST AI RMF MEASURE 2.10",
+        "ISO/IEC 42001 A.7.4"
+      ]
+    },
+    {
+      "control_id": "GC-18",
+      "summary": "Kill switch described but untested; no AI incident definition or evidence set",
+      "owner": "Mira Castellanos (fictional)",
+      "framework_refs": [
+        "NIST AI RMF MANAGE 2.4",
+        "ISO/IEC 42001 A.8.4"
+      ]
+    }
+  ],
+  "top_risks": [
+    "Indirect prompt injection through attacker-controlled alert fields steering triage notes",
+    "Analysts over-trusting AI-drafted dispositions",
+    "Employee personal data sent to a vendor without a reviewed DPA",
+    "Phase 2 auto-close would raise the tier; requires a new assessment"
+  ],
+  "untrusted_content_flag": false,
+  "evidence_note": "The vendor DPA and attendance list were referenced but not provided; the eval results table and policy excerpt were provided in the form; the model version was not stated",
+  "assessed_at": "2026-10-04T20:45:00Z",
+  "frameworks_checked": "NIST AI RMF 1.0; NIST AI 600-1; ISO/IEC 42001:2023; OWASP Top 10 for LLM Applications 2026; EU AI Act as amended by Regulation (EU) 2026/1744 (checked 2026-10-04; verify before formal citation)",
+  "agent_action_taken": "none"
+}
