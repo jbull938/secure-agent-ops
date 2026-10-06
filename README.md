@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/readme-banner.png" alt="secure-agent-ops: running AI agents as privileged identities. Skills: SOC alert triage, untrusted-content guard, access review, AI governance checklist, draft-before-send." width="100%">
+</p>
+
 # secure-agent-ops
 
 **Security-first patterns for running AI agents, built by a SOC and SIEM practitioner.**
