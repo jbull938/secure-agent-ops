@@ -1,0 +1,5 @@
+# Keep fake sample data out of the language bar
+sample-data/** linguist-vendored
+
+# Count Markdown skills and docs as the repo language
+*.md linguist-detectable
