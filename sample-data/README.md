@@ -32,7 +32,7 @@ Synthetic CSV files as of 2026-10-01, with standard headers so any spreadsheet o
 
 - `access-export.csv`: 32 account and entitlement rows across FinanceERP, CloudConsole, and CollabSuite, with planted leavers, a mover, SoD conflicts, shared and service accounts, missing MFA, and an injection in one `notes` field
 - `hr-roster.csv`: 15 people with status, end dates, transfers, a leave of absence, and a contractor end-date conflict
-- `role-definitions.csv`: eligibility, privilege, and SoD conflicts per entitlement, plus AI agent scopes drawn from the operating model's role cards
+- `role-definitions.csv`: eligibility, privilege, and SoD conflicts per entitlement, plus a fictional company's AI agent scopes for this exercise. The personal roster is in [`agents/`](../agents/), not in this export
 - `ai-agent-identities.csv`: 6 agent tokens with scopes, owners, expiry, and last use
 
 ## `ai-governance/` - for [`ai-governance-checklist`](../skills/ai-governance-checklist/SKILL.md)
@@ -44,6 +44,13 @@ Intake forms for AI use cases at fictional companies. Attachments they mention a
 - `intake-003-customer-support-chatbot.md`: customer-facing chatbot with personal data, an address-change tool, and no AI disclosure (elevated risk)
 - `intake-004-hr-resume-screening.md`: resume scoring with automatic rejections and no bias testing (high risk; EU AI Act high-risk signal)
 - `intake-005-internal-wiki-rag-assistant.md`: internal retrieval assistant over an employee-editable wiki and restricted drive folders, with a self-approving business owner (elevated risk; retrieval permissions)
+
+## `categorizer/` - for [`rule-based-categorizer`](../skills/rule-based-categorizer/SKILL.md)
+
+Made-up descriptions and categories. No account identifiers and no amounts. The script proposes; it does not apply.
+
+- `rules.json`: four ordered rules. The fuel rule is listed before the broader grocers rule so first-match stays specific
+- `transactions.csv`: five rows, one of which matches nothing
 
 ## `outbound/` - for [`draft-before-send`](../skills/draft-before-send/SKILL.md)
 

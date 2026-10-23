@@ -1,0 +1,30 @@
+[
+  {
+    "id": "R-10",
+    "field": "description",
+    "match": "contains",
+    "pattern": "NORTHWIND GROCERS FUEL",
+    "category": "Transport"
+  },
+  {
+    "id": "R-20",
+    "field": "description",
+    "match": "contains",
+    "pattern": "NORTHWIND GROCERS",
+    "category": "Groceries"
+  },
+  {
+    "id": "R-30",
+    "field": "description",
+    "match": "contains",
+    "pattern": "CITY WATER",
+    "category": "Utilities"
+  },
+  {
+    "id": "R-40",
+    "field": "description",
+    "match": "contains",
+    "pattern": "RIVERBOOK",
+    "category": "Subscriptions"
+  }
+]

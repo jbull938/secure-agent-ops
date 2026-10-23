@@ -10,9 +10,9 @@ I'm Justin Bull, a CISSP and security product architect focused on Splunk Enterp
 
 AI agents are a new kind of privileged identity. They read untrusted content, call tools, and act on someone's behalf. This repo applies classic security controls to them: least privilege, separation of duties, human approval for risky actions, and audit-ready evidence.
 
-It documents how I design and run a small personal multi-agent assistant safely, and it shares reusable security skills you can try yourself.
+It documents how I design and run a small personal multi-agent assistant safely, and it shares reusable security skills you can try yourself. The assistant roster and the workstation coding agent are role cards in [`agents/`](agents/). The rules they follow are in [`guardrails/`](guardrails/).
 
-**Two parts, two audiences.** The [operating model](docs/operating-model.md) is personal: it describes how I run my own multi-agent assistant safely day to day. The [skills](skills/) are enterprise security use cases (SOC alert triage, prompt-injection defense, access governance, AI governance, and approval before outbound messages) that anyone can adapt and use at work. Both are built and tested on synthetic data only.
+**Two parts, two audiences.** The [operating model](docs/operating-model.md) is personal: it describes how I run my own multi-agent assistant safely day to day. The [skills](skills/) are enterprise security use cases (SOC alert triage, prompt-injection defense, access governance, AI governance, and approval before outbound messages) that anyone can adapt and use at work. Both are built and tested on synthetic data only. One more skill, [rule-based-categorizer](skills/rule-based-categorizer/SKILL.md), is a personal-lab pattern for the same separation of duties: local rules propose a category, and the data owner applies it.
 
 ## What's here
 
@@ -20,8 +20,8 @@ It documents how I design and run a small personal multi-agent assistant safely,
 |---|---|
 | `docs/` | The [operating model](docs/operating-model.md) (roles, routing, memory, guardrails) and a [threat model](docs/threat-model.md) mapped to the OWASP Top 10 for LLM Applications 2026 and MITRE ATLAS |
 | `skills/` | Reusable skills in the open Agent Skills (`SKILL.md`) format |
-| `agents/` | One role card per agent: purpose, allowed tools, and when it must escalate to a human |
-| `guardrails/` | Policy files: approval matrix, tool allowlist, stop conditions |
+| `agents/` | One [role card](agents/) per agent: purpose, allowed tools, asks-first actions, and what it never does |
+| `guardrails/` | Policy files: [approval matrix](guardrails/approval-matrix.yaml), [tool allowlist](guardrails/tool-allowlist.md), [stop conditions](guardrails/stop-conditions.md), [mail routing](guardrails/mail-routing.md), and the [propose-then-apply](guardrails/propose-then-apply.md) example |
 | `sample-data/` | Synthetic alerts, access exports, and emails, all clearly fake |
 | `evals/` | Test cases, expected outputs, and notes on where the model gets it wrong |
 
@@ -43,6 +43,13 @@ Each skill is a folder with a `SKILL.md` file: plain-language instructions an AI
 - [x] Skill: access review and least-privilege audit
 - [x] Skill: AI governance checklist (NIST AI RMF, ISO/IEC 42001)
 - [x] Skill: draft-before-send for outbound messages
+- [x] Role cards for the ten-agent roster and the workstation coding agent
+- [x] Guardrail files: machine-readable approval matrix, stop conditions, tool allowlist
+- [x] Mail-routing pattern (label-only filters, security mail excluded)
+- [x] Propose-then-apply categorizer (dry run, synthetic data)
+- [ ] Generate SIEM lookups from the role cards and the approval matrix
+- [ ] Run the evals and fill in the results logs
+- [ ] Rebuild phrase-match mail filters so the security exclusion always wins
 
 ## Ground rules
 

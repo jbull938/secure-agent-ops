@@ -2,13 +2,17 @@
 
 This threat model covers an AI agent that reads untrusted content, holds tools and
 credentials, keeps memory, and acts for a person or a team. It ties the
-[operating model](operating-model.md) to the five skills in [`skills/`](../skills/):
+[operating model](operating-model.md) to the skills in [`skills/`](../skills/):
 
 - [`soc-alert-triage`](../skills/soc-alert-triage/SKILL.md)
 - [`untrusted-content-guard`](../skills/untrusted-content-guard/SKILL.md)
 - [`access-review`](../skills/access-review/SKILL.md)
 - [`ai-governance-checklist`](../skills/ai-governance-checklist/SKILL.md)
 - [`draft-before-send`](../skills/draft-before-send/SKILL.md)
+- [`rule-based-categorizer`](../skills/rule-based-categorizer/SKILL.md), a personal-lab pattern for propose-then-apply, not a detection procedure
+
+The 2026-10-23 update added T15 and residual risks R13 and R14. It did not re-verify the
+ATLAS catalog and did not add ATLAS IDs.
 
 It's written for two readers: me, running a small personal multi-agent assistant, and a
 security team that wants to deploy agents at work. Every name, domain, account, and number
@@ -68,7 +72,7 @@ below also has a control that works even when the model is fooled.
 | # | Asset | Why it matters | Where it lives |
 |---|---|---|---|
 | A1 | The human's accounts and data (mail, calendar, documents, financial views) | Confidentiality and integrity. The agent reads them on someone's behalf | SaaS services behind connectors |
-| A2 | Agent credentials (tokens, service accounts, connector grants) | They turn a fooled model into real actions | Secrets manager or connector platform, never in memory |
+| A2 | Agent credentials (tokens, service accounts, connector grants, saved browser sessions, a dashboard's read-only service account) | They turn a fooled model into real actions | Secrets manager or connector platform, never in memory and never in this repo |
 | A3 | Ability to act externally (send, publish, pay, submit, delete, widen access) | The highest-impact capability | Tools gated by the approval matrix (OM §8) |
 | A4 | Agent memory (profile, log, short-lived notes, shared memory) | Persistent influence over future behavior | Memory store per agent plus shared memory (OM §4) |
 | A5 | Instructions and hidden context (role cards, system instructions, skill files, tool schemas) | Reveals logic and boundaries; must not hold secrets | Repo and agent configuration |
@@ -162,6 +166,7 @@ flowchart LR
 | T12 | Cross-agent confused deputy | LLM01, LLM03 | AML.T0053 | OM §3, §4; DBS A8 |
 | T13 | Audit gaps, secrets in logs, covered tracks | LLM02 | AML.T0092, AML.T0081 | OM §9; DBS audit trail; GC-17, GC-18 |
 | T14 | Governance drift: shadow agents, self-approval, stale access | LLM03, LLM04 | AML.T0012 (dormant credentials) | GC-01, GC-02, GC-20, GC-21; AR F9, F10 |
+| T15 | Shared-record schema coupling | LLM03 | none verified for this update | OM §3, §7, §8; `spreadsheet.schema.write` |
 
 ATLAS tactics for the techniques above, from the 2026.09 data:
 
@@ -322,6 +327,15 @@ index=<your_agent_audit_index> sourcetype="secure_agent_ops:agent_audit" output_
 The agent holds more scope than its role card allows, or its token leaks (config files,
 logs, memory, a phished consent or device-code prompt) and is used without the model at all.
 
+Two personal-lab variants are the same threat. A budget dashboard can read a spreadsheet
+through its own service account. That account is read-only and separate from the finance
+agent, and it is still a credential: an edit scope, or a key left in a note, is this
+threat. A browser check that reuses a saved login is the same threat in another form,
+even when the task is only to look. The session is a credential. The owner starts the
+login in that session, and two failed logins stop the task. Portals in this category
+include a state filing portal and an e-signature service. "Read-only" does not make the
+saved session safe.
+
 - **OWASP:** LLM03:2026 Excessive Agency.
 - **ATLAS:**
   - AML.T0083 Credentials from AI Agent Configuration
@@ -339,6 +353,8 @@ logs, memory, a phished consent or device-code prompt) and is used without the m
 | Agents are in the access review: scope beyond role card, stale tokens, missing owner | AR F8, F9, F10; reviewer independence |
 | Widening a scope or adding a connector needs approval | OM §8 |
 | Approve only device codes and consent prompts you started yourself | OM §7 (device-code login); residual risk R6 |
+| The dashboard reader is a distinct read-only service account. Its key is not in agent memory or in this repo | OM §2, §3; GC-10 |
+| No unattended saved logins. Two failed logins stop the task | OM §7; [`stop-conditions`](../guardrails/stop-conditions.md); AR F10 |
 
 **Detection ideas:**
 
@@ -464,6 +480,8 @@ running.
 | Vendor terms, change notice, and incident notice reviewed | GC-09 |
 | Component record and pinned or tracked model version; provider-side updates trigger re-assessment | GC-25, GC-20 |
 | Skills versioned in git with eval cases | OM §5 |
+| Coding-agent changes are reviewed as a diff before they touch live records. Inbox agents do not edit that code in a browser | OM §3 (handoff) |
+| A dashboard that reads a spreadsheet is pinned to named tabs and columns. Renaming them is out of scope for agents | T15; OM §8 |
 
 **Detection ideas:**
 
@@ -613,6 +631,7 @@ expensive calls. This burns budget and the human's attention.
 | Mitigation | Owner control |
 |---|---|
 | Every task has a stop condition; no loops and no workarounds around a control | OM §7 |
+| Three failures on the same step, two failed logins, or a usage limit stops the task | OM §7; [`stop-conditions`](../guardrails/stop-conditions.md) |
 | Routines are read-only, quiet unless something matters, and reviewed if unused | OM §6 |
 | Cost and volume monitored | GC-17 |
 
@@ -707,29 +726,72 @@ by their own owners.
 | Re-assessment triggers for new tools, scopes, data, or model changes | GC-20 |
 | Retirement plan: revoke credentials, delete indexes and data | GC-21 |
 | Stale tokens and agent scope beyond role card in the periodic access review | AR F9, F10 |
+| Restarting the coordinator writes a handoff and retires the old identity: credentials and routines revoked, one chief only | OM §10; GC-21 |
 
 **Detection ideas:**
 - Agent identities seen in `agent_audit` that aren't in the inventory lookup.
 - Credentials with no use in 30 days. These are the `access-review` F9 findings, sent
   through its SIEM mode.
+- Two chief identities active after a coordinator restart. The old credential should
+  have no successful calls after the handoff date.
+
+---
+
+### T15. Shared-record schema coupling
+
+An agent writes to a shared spreadsheet, or renames a tab or a column, that another
+system reads. The write can be inside the letter of "edit my notes" and still break a
+dashboard, a filter, or a routine that pinned those names. The budget dashboard is the
+case in this lab: a read-only service account reads named tabs, and a rename breaks it.
+The categorizer is the counter-pattern. It proposes categories and does not write the
+sheet. See [`guardrails/propose-then-apply.md`](../guardrails/propose-then-apply.md).
+
+- **OWASP:** LLM03:2026 Excessive Agency. The failure is a write scope that ignores the
+  downstream reader.
+- **ATLAS:** no technique newly verified for this update. The 2026-10-04 catalog check
+  was not repeated, and none of the IDs already cited is a clean fit for "rename a
+  column another system parses." Do not treat that absence as a low severity.
+
+**Mitigations:**
+
+| Mitigation | Owner control |
+|---|---|
+| Agents never rename or reshape schema another system reads | OM §7, §8; `spreadsheet.schema.write` is `never` |
+| Finance proposes categories and does not write the spreadsheet. The owner applies accepted rows | OM §2; `records.apply` is `never`; rule-based categorizer |
+| Dashboard code changes go through the workstation coding agent, and the owner reviews the diff | OM §3 |
+| The dashboard's service account is read-only, so it cannot be the writer that renames the sheet | OM §2; T3 |
+| Shared-cell edits that are still allowed elsewhere need a preview of the exact cells | OM §8; `spreadsheet.shared.write` |
+
+**Detection ideas:**
+
+A schema write is a control failure. Agents are not given this tool:
+
+```spl
+index=<your_agent_audit_index> sourcetype="secure_agent_ops:agent_audit" tool="spreadsheet.schema.write"
+| table _time agent task_id target approval_id approval_decision
+```
+
+Any hit is reviewed, including a hit that carries an approval. Approval does not make a
+rename safe. The owner does schema changes outside the agent tool list.
 
 ## 6. Coverage by component
 
 | Component | Threats it mainly addresses |
 |---|---|
-| Operating model (OM §2–§9) | T1, T2, T3, T4, T8, T10, T11, T12, T13 |
+| Operating model (OM §2–§9) | T1, T2, T3, T4, T8, T10, T11, T12, T13, T15 |
 | `untrusted-content-guard` | T1, T2, T4, T5, T7, T8 |
 | `soc-alert-triage` | T1 (alert-field injection), T9 |
 | `access-review` | T3, T14 |
 | `ai-governance-checklist` | T5, T6, T9, T13, T14, plus a pre-launch check of all the others |
 | `draft-before-send` | T1, T2, T8, T10, T12, T13 |
+| `rule-based-categorizer` | T10, T15 (propose, never write live records) |
 
 ## 7. Residual risks and open gaps
 
 | # | Residual risk or gap | Why it remains | Next step |
 |---|---|---|---|
 | R1 | **Draft-before-send relies on the model unless the send tool enforces it.** The skill now defines the draft card, single-use approvals bound to a content hash, recipient and data checks, and an audit trail. But a fooled or buggy agent can still call a send tool directly if the tool doesn't check the approval itself | Most agent platforms don't verify approvals inside send tools | Have send tools reject calls without a matching approval ID and hash; keep the mail-log detection (DBS detection 4) as the backstop; run the `draft-before-send` evals |
-| R2 | **Role cards and the machine-readable approval matrix aren't published.** `agents/` and `guardrails/` are placeholders | Work in progress | Publish them, and generate the `agent_role_cards.csv` and allowlist lookups used in the detections from them |
+| R2 | **SIEM lookups are not generated from the published cards.** Role cards and [`guardrails/approval-matrix.yaml`](../guardrails/approval-matrix.yaml) are in the repo. The detections still assume `agent_role_cards.csv` and an egress allowlist that nothing builds from those files | The lookup step is not automated | Generate the lookups from `agents/` and the approval matrix, and regenerate them when a card changes |
 | R3 | **Injection detection is model-based and will miss things.** | No reliable classifier exists | Keep capability limits and approvals as the real control; keep adding eval cases |
 | R4 | **Trust labels can be lost across handoffs and memory.** An agent may summarize untrusted content into a "fact" that later looks trusted | Labels are a convention, not enforced by the platform | Carry a source and trust field with every memory entry and handoff packet; test it with an eval |
 | R5 | **Newest-fact-wins in shared memory can be gamed** by a poisoned recent write | Simplicity of the memory design | Require a named source for any shared-memory write and flag writes from tasks with untrusted content (T4 detection) |
@@ -740,6 +802,8 @@ by their own owners.
 | R10 | **No eval results recorded yet** for any skill | Evals written, not yet run | Run them and fill in the results logs |
 | R11 | **Approval fatigue is measured, not prevented.** | Human factor | Keep the "Needs approval" column short; narrow scope instead of removing controls (OM §10) |
 | R12 | **Agent-specific risk list not mapped.** The OWASP Top 10 for Agentic Applications would fit T4, T12, and T13 better than the LLM list | IDs not verified for this document | Verify, then add a column |
+| R13 | **A phrase-match mail filter can label security mail.** If a keyword rule wins over the security exclusion, or the label is applied first, a message from an e-signature service that looks like a security alert can land under an agent's label. The home-sale checklist is where this showed up | Filter logic is easy to get wrong, and the mail connector cannot create filters, so a fix is imported by hand | Put the exclusion in every query, test phrase rules against security subjects, and until that passes treat security-looking mail as out of scope even when the label is present. See [`guardrails/mail-routing.md`](../guardrails/mail-routing.md) |
+| R14 | **The schema freeze is a convention.** A spreadsheet token that can edit cells can usually rename a tab too. Nothing in a typical connector rejects the rename on behalf of the downstream reader | The writer and the reader are different systems | Keep edit scope off assistant tokens, keep the dashboard's service account read-only, and alert on `spreadsheet.schema.write` (T15) |
 
 ## 8. Review
 

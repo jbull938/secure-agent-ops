@@ -1,5 +1,8 @@
 # Keep fake sample data out of the language bar
 sample-data/** linguist-vendored
 
+# The categorizer is a small example, not the language of this repo
+skills/rule-based-categorizer/categorize.py linguist-vendored
+
 # Count Markdown skills and docs as the repo language
 *.md linguist-detectable
