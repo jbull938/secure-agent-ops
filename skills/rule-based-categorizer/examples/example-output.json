@@ -1,0 +1,43 @@
+{
+  "mode": "dry_run",
+  "applied_to_records": false,
+  "proposal_count": 5,
+  "needs_owner_count": 1,
+  "proposals": [
+    {
+      "row_id": "T-100",
+      "rule_id": "R-20",
+      "category": "Groceries",
+      "matched_on": "description",
+      "status": "proposed"
+    },
+    {
+      "row_id": "T-101",
+      "rule_id": "R-10",
+      "category": "Transport",
+      "matched_on": "description",
+      "status": "proposed"
+    },
+    {
+      "row_id": "T-102",
+      "rule_id": "R-30",
+      "category": "Utilities",
+      "matched_on": "description",
+      "status": "proposed"
+    },
+    {
+      "row_id": "T-103",
+      "rule_id": "R-40",
+      "category": "Subscriptions",
+      "matched_on": "description",
+      "status": "proposed"
+    },
+    {
+      "row_id": "T-104",
+      "rule_id": null,
+      "category": "Uncategorized",
+      "matched_on": null,
+      "status": "needs_owner"
+    }
+  ]
+}
